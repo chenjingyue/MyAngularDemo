@@ -1,38 +1,19 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 
-<!-- 表头 -->
-<div style="width:1200px">
-  <div style="display: inline-block; ">
-  <div class="tableName">
-    <div [style.width]="name.width"  *ngFor="let name of tableStyle">{{name.key}}</div>
-  </div>
+<div *ngIf="table" style="background-color:#fafafa; width:1200px;"> 
+  <tableList *ngIf="table" [TableNames]="tableNames" [TableValues]="tableValues" [TableStyle]="tableStyle"></tableList>
+  <!-- <tableList  [tableValues]="tableValues"></tableList> -->
+  <calendar></calendar>
+</div>
+<div >
+  <upload *ngIf="upload"></upload>
+</div>
 
-  <!-- 表格内容 -->
-  <div class="tableValueaa" >
-      <div class="tableValue" *ngFor="let values of tableValues">
-        <div *ngFor="let style of tableStyle">
-            <!-- 文本 -->
-            <div *ngIf="style.type == 'text'" [style.width]="style.width" >{{values[style.key]}}</div>
-            <!-- 操作组 -->
-            <div *ngIf="style.type == 'operate'" [style.width]="style.width"  class="operateGroup">
-              <div *ngFor="let val of style.val">
-                <!-- 编辑 -->
-                <div *ngIf="val.type == 'edit'" class="edit" title="{{val.name}}"></div>
-                <!-- 删除 -->
-                <div *ngIf="val.type == 'delete'" class="delete" title="{{val.name}}"></div>
-              </div>
-            </div>
-        </div>
-        <!-- <div [style.width]="width" >{{values.id}}</div>
-        <div [style.width]="width" >{{values.name}}</div>
-        <div [style.width]="width" >{{values.age}}</div>
-        <div [style.width]="width" >{{values.class}}</div>
-        <div [style.width]="width" >{{values.sex}}</div>
-        <div [style.width]="width" >{{values.Hobby}}</div> -->
-      </div>
-  </div>
-</div>
-</div>
+<button (click)="uploadIf()">upload</button>
+<button (click)="tableIf()">table</button>
+
+
+
 
 <router-outlet></router-outlet>

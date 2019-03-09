@@ -1,0 +1,26 @@
+
+<!-- 表头 -->
+<div style="display: inline-block; ">
+  <div class="tableName">
+    <div [style.width]="name.width" class="pointer"  *ngFor="let name of tableStyle" title="{{name.key}}">{{name.key}}</div>
+  </div>
+
+  <!-- 表格内容 -->
+  <div class="tableValueaa" >
+      <div class="tableValue" *ngFor="let values of tableValues">
+        <div *ngFor="let style of tableStyle">
+            <!-- 文本 -->
+            <div *ngIf="style.type == 'text'" class="pointer" [style.width]="style.width" title="{{values[style.key]}}">{{values[style.key]}}</div>
+            <!-- 操作组 -->
+            <div *ngIf="style.type == 'operate'" [style.width]="style.width"  class="operateGroup">
+              <div *ngFor="let val of style.val">
+                <!-- 编辑 -->
+                <div *ngIf="val.type == 'edit'" class="edit pointer" title="{{val.name}}"></div>
+                <!-- 删除 -->
+                <div *ngIf="val.type == 'delete'" class="delete pointer" title="{{val.name}}"></div>
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>

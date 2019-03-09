@@ -1,0 +1,35 @@
+
+<div style="margin: 20px; width: 100px;height: 20px;">{{selectedDateStr}}</div>
+
+<!-- 日历 -->
+<div class="rili">
+  <!-- 月份选择 -->
+  <div class="yearAndMonth">
+    <div class="yearButton">
+      <div class="leftArrow" (click)="yearSubtract()"></div>
+      <div class="numView">{{year}}</div>
+      <div class="rightArrow" (click)="yearAdd()"></div>
+    </div>
+    <div class="todayButton" (click)="todayClick()">today</div>
+    <div class="yearButton">
+      <div class="leftArrow" (click)="monthSubtract()"></div>
+      <div class="numView">{{month}}</div>
+      <div class="rightArrow" (click)="monthAdd()"></div>
+    </div>
+  </div>
+  <!-- 星期 -->
+  <div class="weeks">
+    <div class="week" *ngFor="let value of weeks let index">{{value}}</div>
+  </div>
+  <!-- 日期列表 -->
+  <div class="row" *ngFor="let rows of rili; let x = index">
+    <div class="colums" *ngFor="let columns of rows; let y = index">
+      <div *ngIf="columns.isCurrentMonth && currentDateStr===columns.dateStr" [class]="columns.classStyle" (click)="dateClick(x,y)">{{columns.val}}</div>
+      <div *ngIf="columns.isCurrentMonth && currentDateStr!==columns.dateStr" [class]="columns.classStyle" (click)="dateClick(x,y)">{{columns.val}}</div>
+      <div *ngIf="!columns.isCurrentMonth" [class]="columns.classStyle" (click)="dateClick(x,y)">{{columns.val}}</div>
+    </div>
+  </div>
+</div>
+
+
+<router-outlet></router-outlet>

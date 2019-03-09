@@ -1,32 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
+import { Component, OnInit,OnDestroy, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: 'tableList',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css'],
 })
-export class AppComponent implements OnInit {
-
-  
-
-  table:boolean = true;
-  upload:boolean = true;
-  uploadIf() {
-    this.upload = !this.upload;
-  }
-
-  tableIf() {
-    this.table = !this.table;
-  }
-
+export class TableComponent implements OnInit {
 
   tableNames:any;
   tableValues:any;
   tableStyle:any;
 
+  // @Input("tableNames") tableNames: any;
+  // @Input("tableValues") tableValues: any;
+  // @Input("tableStyle") tableStyle: any;
+
+  @Input() set TableNames(tableNames:any){
+    this.tableNames = tableNames;
+  }
+
+  @Input() set TableValues(tableValues:any){
+    this.tableValues = tableValues;
+  }
+
+  @Input() set TableStyle(tableStyle:any){
+    this.tableStyle = tableStyle;
+  }
+
+  @Output() output = new EventEmitter();
+
   ngOnInit() {
+
     // this.initTableParam();
+    // this.tableNamesd = this.tableNames;
+    console.log("table");
+
   }
   initTableParam() {
     this.tableNames = [
@@ -38,7 +46,7 @@ export class AppComponent implements OnInit {
       "Hobby"
     ];
     this.tableValues = [];
-    for (let index = 1; index < 11; index++) {
+    for (let index = 0; index < 10; index++) {
       let object = {
         'id': index,
         'name': `name+ ${index}`,
@@ -90,6 +98,9 @@ export class AppComponent implements OnInit {
         ]
       }
     ];
+  }
+  ngOnDestroy() {
+    console.log("this is table!!")
   }
 
 }

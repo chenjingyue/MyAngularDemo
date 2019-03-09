@@ -1,0 +1,35 @@
+*{
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+
+.upload{
+    width: 300px;
+    height: 26px;
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 100px;
+}
+.uploadButton{
+    width: 60px;
+    height: 26px;
+    padding: 0px;
+    border: 1px solid #33dcfafa;
+    border-radius: 4px;
+    background-color: #33dcfafa;
+    color: #fff;
+}
+.inputBox{
+    width: 200px;
+    height: 26px;
+    border: 1px solid #979696;
+    border-radius: 4px;
+    padding: 0 10px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
