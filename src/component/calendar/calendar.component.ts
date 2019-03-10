@@ -8,8 +8,8 @@ import * as $ from 'jquery';
 })
 export class CalendarComponent implements OnInit {
 
-  rili:any = [];
-  riliObjectList:any;
+  calendar:any = [];
+  calendarObjectList:any;
   year:number;
   month:number;
   weeks:any = ['日','一','二','三','四','五','六'];
@@ -19,6 +19,9 @@ export class CalendarComponent implements OnInit {
   selectedDate:any;
   x:number;
   y:number;
+  isView:boolean = false;
+  dateTextID:string = 'aaa';
+  left:string;
 
   
   ngOnInit() {
@@ -29,12 +32,12 @@ export class CalendarComponent implements OnInit {
   }
   
   tableInit() {
-    this.rili = [];
+    this.calendar = [];
     for (let row = 0; row < 6; row++) {
-      this.rili[row] = [];
+      this.calendar[row] = [];
       for (let column = 0; column < 7; column++) {
         let num = row*7 + column;
-        let object = this.riliObjectList[num];
+        let object = this.calendarObjectList[num];
         if(this.selectedDateStr === object.dateStr) {
           this.x = row;
           this.y = column;
@@ -53,7 +56,7 @@ export class CalendarComponent implements OnInit {
         } else {
           object['classStyle'] = object.isSelected ? 'element notCurrentDate selected':'element notCurrentDate';
         }
-        this.rili[row][column] = object;
+        this.calendar[row][column] = object;
       }
       
     }
@@ -61,7 +64,7 @@ export class CalendarComponent implements OnInit {
 
 
   initRiliParam(date:Date) {
-    this.riliObjectList = [];
+    this.calendarObjectList = [];
     this.year = date.getFullYear();
     this.month = date.getMonth() + 1;
     let day = date.getDate();
@@ -83,7 +86,7 @@ export class CalendarComponent implements OnInit {
           isCurrentMonth: false,
           isSelected: false
         };
-        this.riliObjectList.push(object);
+        this.calendarObjectList.push(object);
       }
     }
     for (let index = 0; index < lastDay.getDate(); index++) {
@@ -95,9 +98,9 @@ export class CalendarComponent implements OnInit {
         isCurrentMonth: true,
         isSelected: false
       };
-      this.riliObjectList.push(object);
+      this.calendarObjectList.push(object);
     }
-    let length = this.riliObjectList.length;
+    let length = this.calendarObjectList.length;
     for (let index = 1; index <= 42 - length; index++) {
       let dateTemp = new Date(Date.parse(lastDay.toLocaleDateString()) + (86400000 * index));
       let object = {
@@ -107,7 +110,7 @@ export class CalendarComponent implements OnInit {
         isCurrentMonth: false,
         isSelected: false
       };
-      this.riliObjectList.push(object);
+      this.calendarObjectList.push(object);
     }
   }
   //获取当前月第一天日期
@@ -166,7 +169,7 @@ export class CalendarComponent implements OnInit {
   }
   // 日期选择
   dateClick(x:number,y:number) {
-    let selectedObjcet = this.rili[x][y];
+    let selectedObjcet = this.calendar[x][y];
     this.selectedDate = selectedObjcet['date'];
     // if(selectedObjcet['isCurrentMonth']) {
       // this.rili[this.x][this.y]['isSelected'] = false;
@@ -213,6 +216,18 @@ export class CalendarComponent implements OnInit {
     let firstDate = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth()+1, 1);
     this.initRiliParam(firstDate);
     this.tableInit();
+  }
+  calendarView(){
+    let flag = this.isView;
+    if (flag) {
+      this.isView = false;
+    } else {
+      this.isView = true;
+      let height = document.getElementById(this.dateTextID).offsetHeight;
+      let width = document.getElementById(this.dateTextID).offsetWidth;
+      this.left = (width - 140) + 'px';
+      // $('#dateTextID')
+    }
   }
 
 }

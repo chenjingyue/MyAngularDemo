@@ -64,12 +64,13 @@
     background-color: white;
 
 }
-.rili{
+.calendar{
     width: 230px;
     background-color: #fafafa;
-    margin: 20px;
+    /* margin: 20px; */
     border-radius: 10px;
     padding: 10px;
+    position: relative;
 }
 .yearButton{
     display: flex;
@@ -96,4 +97,24 @@
     background:azure;
     border-radius: 4px;
     padding: 2px;
+}
+.dateView{
+    width: 200px;
+    height: 30px;
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dateText{
+    width: calc(100% - 30px); 
+    padding-left: 10%;
+}
+.dateImage{
+    background-image: url('src\assets\image\calendar.png');
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    cursor: pointer;
 }
