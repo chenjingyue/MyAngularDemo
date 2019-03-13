@@ -12,6 +12,25 @@
 
 <button (click)="uploadIf()">upload</button>
 <button (click)="tableIf()">table</button>
+<button (click)="circleProgressIf()">circle-progress</button>
+
+<div *ngIf="circleProgress" style="width:500px; height:300px; background:bisque">
+  <circle-progress
+  [percent]=percent
+  [radius]="100"
+  [outerStrokeWidth]="16"
+  [innerStrokeWidth]="8"
+  [outerStrokeColor]="'#78C000'"
+  [innerStrokeColor]="'#C7E596'"
+  [animation]="true"
+  [animationDuration]="300" 
+  [startFromZero]=false
+  [showInnerStroke]=true
+  [backgroundStrokeWidth]=2
+  [subtitle]="'true'"
+></circle-progress>
+</div>
+
 
 
 

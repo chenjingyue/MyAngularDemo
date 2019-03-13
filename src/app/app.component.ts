@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -6,7 +6,7 @@ import * as $ from 'jquery';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,OnDestroy {
 
   
 
@@ -24,9 +24,32 @@ export class AppComponent implements OnInit {
   tableNames:any;
   tableValues:any;
   tableStyle:any;
+  percent:number = 5;
+  t1:any;
+  circleProgress:boolean = true;
 
   ngOnInit() {
     // this.initTableParam();
+    this.t1=window.setInterval(refreshCount, 200);
+    var bThis = this;
+    function refreshCount() {
+      bThis.percent = bThis.percent + 0.5;
+
+      console.log("ready" + bThis.percent);
+      if (bThis.percent === 50) {
+        bThis.percent =90;
+        window.clearInterval(bThis.t1);
+      }
+    }
+    //去掉定时器的方法  
+    // window.clearInterval(t1);
+  }
+
+  ngOnDestroy() {
+    window.clearInterval(this.t1);
+  }
+  circleProgressIf() {
+    this.circleProgress = !this.circleProgress;
   }
   initTableParam() {
     this.tableNames = [

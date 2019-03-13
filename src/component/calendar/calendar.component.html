@@ -1,11 +1,11 @@
-<div style="position: absolute;">
+<div style="position: relative;">
   <div  [id]="dateTextID" class="dateView">
     <div class="dateText">{{selectedDateStr}}</div>
     <div class="dateImage" (click)="calendarView()"></div>
   </div>
 
   <!-- 日历 -->
-  <div *ngIf="isView" class="calendar" [style.left]="left" style="top:5px;">
+  <div *ngIf="isView" class="calendar" [style.left]="left" style="margin-top:15px;">
     <!-- 月份选择 -->
     <div class="yearAndMonth">
       <div class="yearButton">
