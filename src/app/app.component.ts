@@ -29,18 +29,18 @@ export class AppComponent implements OnInit,OnDestroy {
   circleProgress:boolean = true;
 
   ngOnInit() {
-    // this.initTableParam();
-    this.t1=window.setInterval(refreshCount, 200);
-    var bThis = this;
-    function refreshCount() {
-      bThis.percent = bThis.percent + 0.5;
+    this.initTableParam();
+    // this.t1=window.setInterval(refreshCount, 200);
+    // var bThis = this;
+    // function refreshCount() {
+    //   bThis.percent = bThis.percent + 0.5;
 
-      console.log("ready" + bThis.percent);
-      if (bThis.percent === 50) {
-        bThis.percent =90;
-        window.clearInterval(bThis.t1);
-      }
-    }
+    //   console.log("ready" + bThis.percent);
+    //   if (bThis.percent === 50) {
+    //     bThis.percent =90;
+    //     window.clearInterval(bThis.t1);
+    //   }
+    // }
     //去掉定时器的方法  
     // window.clearInterval(t1);
   }

@@ -11,8 +11,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    margin: 100px;
 }
 .uploadButton{
     width: 60px;
