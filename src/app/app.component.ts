@@ -74,31 +74,38 @@ export class AppComponent implements OnInit,OnDestroy {
     }
     this.tableStyle = [
       { key:'id',
+        'min-width':'100px',
         width:'100px',
         type:'text'
       },
       { key:'name',
+        'min-width':'100px',
         width:'100px',
         type:'text'
       },
       { key:'age',
+        'min-width':'100px',
         width:'100px',
         type:'text'
       },
       { key:'class',
+        'min-width':'100px',
         width:'100px',
         type:'text'
       },
       { key:'sex',
+        'min-width':'100px',
         width:'100px',
         type:'text'
       },
       { key:'Hobby',
+        'min-width':'100px',
         width:'100px',
         type:'text'
       },
       {
         key:'operate',
+        'min-width':'120px',
         width:'120px',
         type:'operate',
         val:[

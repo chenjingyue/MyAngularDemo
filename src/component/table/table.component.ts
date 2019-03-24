@@ -1,4 +1,5 @@
 import { Component, OnInit,OnDestroy, Input, Output, EventEmitter} from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'tableList',
@@ -99,6 +100,94 @@ export class TableComponent implements OnInit {
       }
     ];
   }
+  x:number = 0;
+  y:number = 0;
+  leftX:number = 0;
+  rightX:number = 0;
+  tableNameId:string = 'tableNameId_';
+  nowTableIndex:number = -1;
+  tableIndex:number = -1;
+  cursorStyle:boolean = false;
+  space:number = 5;
+  isMousedown:boolean = false;
+  // index:number = -1;
+  mousemove(event:any){
+    // this.tableIndex = -1;
+    let offset = event.pageX - this.x;
+    this.x = event.pageX;
+    this.y = event.pageY; 
+    if(this.isMousedown && this.cursorStyle) {
+      let width = this.tableStyle[this.tableIndex]['width'];
+      let width1 = width.substr(0, (width.length-2))/1;
+      this.tableStyle[this.tableIndex]['width'] = (width1 + offset) + 'px';
+      return ;
+    }
+    this.leftSpace();
+    if(this.x-this.leftX <= this.space) {
+      // this.isMousedown = false;
+      this.cursorStyle = true;
+      this.tableIndex = this.nowTableIndex-1;
+      // document.getElementById(this.tableNameId + this.nowTableIndex).style.cursor="col-resize"; 
+    } else if (this.rightX-this.x <= this.space) {
+      // this.isMousedown = false;
+      this.cursorStyle = true;
+      this.tableIndex = this.nowTableIndex;
+      // document.getElementById(this.tableNameId + this.nowTableIndex).style.cursor="col-resize"; 
+    } else {
+      this.cursorStyle = false;
+      this.tableIndex = this.nowTableIndex;
+    }
+  }
+  leftSpace() {
+    let div = document.getElementById(this.tableNameId + this.nowTableIndex);
+    this.leftX = div.offsetLeft;  //当前div左边两个的点的x值
+    this.rightX = this.leftX + div.offsetWidth;  //当前div右边两个点的x的值 
+  }
+  mouseover(event:any,index:number){
+    this.nowTableIndex = index;
+    let div = document.getElementById(this.tableNameId + index);
+    this.leftX = div.offsetLeft;  //当前div左边两个的点的x值
+    this.rightX = this.leftX + div.offsetWidth;  //当前div右边两个点的x的值  
+    
+    // this.tableIndex = index;
+    console.log('mouseover');
+  }
+  mouseout(){
+    this.tableIndex = -1;
+    this.cursorStyle = false;
+    // this.isMousedown = false;
+    console.log('mouseleave');
+  }
+  mouseleave2(event:any) {
+    // $("body").css("cursor","auto");
+    this.mouseout();
+    this.mouseup(event);
+  }
+
+  mousedown(event:any){
+    this.isMousedown = true;
+    window.getSelection().empty();
+  }
+  mouseup(event:any){
+    this.isMousedown = false;
+    this.cursorStyle = false;
+    // window.getSelection().empty();
+  }
+  click() {
+    this.isMousedown = false;
+    console.log('click');
+  }
+
+  // $(document).ready(function(){
+  //   $("button").bind({
+  //     click:function(){$("p").slideToggle();},
+  //     mouseover:function(){$("body").css("background-color","red");},  
+  //     mouseout:function(){$("body").css("background-color","#FFFFFF");}  
+  //   });
+  // });
+ 
+
+
   ngOnDestroy() {
     console.log("this is table!!")
   }

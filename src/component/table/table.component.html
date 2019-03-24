@@ -1,8 +1,13 @@
 
 <!-- 表头 -->
-<div style="display: inline-block; ">
-  <div class="tableName">
-    <div [style.width]="name.width" class="pointer"  *ngFor="let name of tableStyle" title="{{name.key}}">{{name.key}}</div>
+<div style="display: inline-block; " >
+  <div class="tableName"   (mousemove)="mousemove($event)" (mousedown)="mousedown($event)" 
+    (mouseup)="mouseup($event)" (mouseleave)="mouseleave2($event)" (click)="click()">
+    <div [style.min-width]="name['min-width']" [style.width]="name['width']"
+       [style.cursor]="cursorStyle ? 'col-resize': 'auto'" 
+      [class]="tableIndex==i ? 'tableNameHeight tableMouseover' :'tableNameHeight' "  
+      *ngFor="let name of tableStyle; let i = index" [id]="tableNameId+i"
+       title="{{name.key}}" (mouseover)="mouseover($event,i)" (mouseout)="mouseout()">{{name.key}}</div>
   </div>
 
   <!-- 表格内容 -->
@@ -10,9 +15,11 @@
       <div class="tableValue" *ngFor="let values of tableValues">
         <div *ngFor="let style of tableStyle">
             <!-- 文本 -->
-            <div *ngIf="style.type == 'text'" class="pointer" [style.width]="style.width" title="{{values[style.key]}}">{{values[style.key]}}</div>
+            <div *ngIf="style.type == 'text'" class="pointer" [style.min-width]="style['min-width']"
+            [style.width]="style['width']" title="{{values[style.key]}}">{{values[style.key]}}</div>
             <!-- 操作组 -->
-            <div *ngIf="style.type == 'operate'" [style.width]="style.width"  class="operateGroup">
+            <div *ngIf="style.type == 'operate'" [style.min-width]="style['min-width']" 
+              [style.width]="style['width']" class="operateGroup">
               <div *ngFor="let val of style.val">
                 <!-- 编辑 -->
                 <div *ngIf="val.type == 'edit'" class="edit pointer" title="{{val.name}}"></div>
