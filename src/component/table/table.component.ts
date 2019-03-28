@@ -11,6 +11,8 @@ export class TableComponent implements OnInit {
   tableNames:any;
   tableValues:any;
   tableStyle:any;
+  sumWidth:number = 0;
+  sumMinWidth:number = 0;
 
   // @Input("tableNames") tableNames: any;
   // @Input("tableValues") tableValues: any;
@@ -31,11 +33,21 @@ export class TableComponent implements OnInit {
   @Output() output = new EventEmitter();
 
   ngOnInit() {
+    this.initParam();
 
     // this.initTableParam();
     // this.tableNamesd = this.tableNames;
     console.log("table");
 
+  }
+  initParam(){
+    
+    for (let index = 0; index < this.tableStyle.length; index++) {
+      let width = this.tableStyle[index]['width'];
+      let minWidth = this.tableStyle[index]['minWidth'];
+      this.sumWidth += width;
+      this.sumMinWidth += minWidth;
+    }
   }
   initTableParam() {
     this.tableNames = [
@@ -108,27 +120,47 @@ export class TableComponent implements OnInit {
   nowTableIndex:number = -1;
   tableIndex:number = -1;
   cursorStyle:boolean = false;
-  space:number = 5;
+  space:number = 3;
   isMousedown:boolean = false;
+  tableNameID:string = "tableNameID";
+  tableValueID:string = "talbeValueID";
   // index:number = -1;
   mousemove(event:any){
+    event.preventDefault();
     // this.tableIndex = -1;
     let offset = event.pageX - this.x;
     this.x = event.pageX;
     this.y = event.pageY; 
     if(this.isMousedown && this.cursorStyle) {
+      // $("body").bind();
+      // $("body").bind("mousemove",function(e){
+      //   $("body").css("cursor","pointer");
+        
+      // });
+      let minWidth = this.tableStyle[this.tableIndex]['minWidth'];
+      // let minWidthValue = minWidth.substr(0, (minWidth.length-2))/1;
       let width = this.tableStyle[this.tableIndex]['width'];
-      let width1 = width.substr(0, (width.length-2))/1;
-      this.tableStyle[this.tableIndex]['width'] = (width1 + offset) + 'px';
+      // let widthValue = width.substr(0, (width.length-2))/1;
+      let newWidth = width + offset;
+      if(newWidth < minWidth) {
+        return;
+      }
+      this.sumWidth = Math.max(this.sumMinWidth, this.sumWidth+offset);
+      this.tableStyle[this.tableIndex]['width'] = Math.max(newWidth,minWidth);
       return ;
     }
     this.leftSpace();
-    if(this.x-this.leftX <= this.space) {
+    let element = $("#"+this.tableValueID);
+    let scrollLeft = 0;
+    if (this.hasScrolled(element[0],"horizontal")){
+      scrollLeft = element[0].scrollLeft;
+    }
+    if(this.nowTableIndex > 0 && this.x+scrollLeft-this.leftX <= this.space) {
       // this.isMousedown = false;
       this.cursorStyle = true;
       this.tableIndex = this.nowTableIndex-1;
       // document.getElementById(this.tableNameId + this.nowTableIndex).style.cursor="col-resize"; 
-    } else if (this.rightX-this.x <= this.space) {
+    } else if (this.rightX-this.x-scrollLeft <= this.space) {
       // this.isMousedown = false;
       this.cursorStyle = true;
       this.tableIndex = this.nowTableIndex;
@@ -177,6 +209,20 @@ export class TableComponent implements OnInit {
     this.isMousedown = false;
     console.log('click');
   }
+  onscroll(event:any) {
+    let target = event.target.scrollLeft;
+    // var t = $("#"+this.tableNameID);
+    $("#"+this.tableNameID).scrollLeft(target);
+    // document.getElementById(this.tableNameID).scrollLeft = target;
+  }
+  // 判断是否存在滚动条
+  hasScrolled(element,direction){
+    if(direction==='vertical'){
+        return element.scrollHeight>element.clientHeight;
+    }else if(direction==='horizontal'){
+        return element.scrollWidth>element.clientWidth;
+    }
+}
 
   // $(document).ready(function(){
   //   $("button").bind({
