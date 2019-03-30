@@ -32,12 +32,27 @@ export class TableComponent implements OnInit {
 
   @Output() output = new EventEmitter();
 
+  
+  tableNameID1:string = "tableNameID1";
+  
+  ngAfterViewInit() {
+    console.log("ngAfterViewInit");
+    let bThis = this;
+    $("#"+this.tableNameID1).bind("mousemove",function(e3){
+      bThis.mousemove(e3);
+    })
+  }
   ngOnInit() {
     this.initParam();
-
+    // let bThis = this;
+    // var aa = $('#ccc');
+    // var bb = document.getElementById(this.tableNameID1);
+    // $("#"+this.tableNameID1).bind("mousemove",function(e3){
+    //   bThis.mousemove(e3);
+    // })
     // this.initTableParam();
     // this.tableNamesd = this.tableNames;
-    console.log("table");
+    console.log("table ngOnInit");
 
   }
   initParam(){
@@ -119,36 +134,18 @@ export class TableComponent implements OnInit {
   tableNameId:string = 'tableNameId_';
   nowTableIndex:number = -1;
   tableIndex:number = -1;
+  movedTableIndex:number = -1;
   cursorStyle:boolean = false;
   space:number = 3;
   isMousedown:boolean = false;
   tableNameID:string = "tableNameID";
   tableValueID:string = "talbeValueID";
+  moving:boolean = false;
   // index:number = -1;
   mousemove(event:any){
     event.preventDefault();
-    // this.tableIndex = -1;
-    let offset = event.pageX - this.x;
     this.x = event.pageX;
     this.y = event.pageY; 
-    if(this.isMousedown && this.cursorStyle) {
-      // $("body").bind();
-      // $("body").bind("mousemove",function(e){
-      //   $("body").css("cursor","pointer");
-        
-      // });
-      let minWidth = this.tableStyle[this.tableIndex]['minWidth'];
-      // let minWidthValue = minWidth.substr(0, (minWidth.length-2))/1;
-      let width = this.tableStyle[this.tableIndex]['width'];
-      // let widthValue = width.substr(0, (width.length-2))/1;
-      let newWidth = width + offset;
-      if(newWidth < minWidth) {
-        return;
-      }
-      this.sumWidth = Math.max(this.sumMinWidth, this.sumWidth+offset);
-      this.tableStyle[this.tableIndex]['width'] = Math.max(newWidth,minWidth);
-      return ;
-    }
     this.leftSpace();
     let element = $("#"+this.tableValueID);
     let scrollLeft = 0;
@@ -156,18 +153,20 @@ export class TableComponent implements OnInit {
       scrollLeft = element[0].scrollLeft;
     }
     if(this.nowTableIndex > 0 && this.x+scrollLeft-this.leftX <= this.space) {
-      // this.isMousedown = false;
       this.cursorStyle = true;
       this.tableIndex = this.nowTableIndex-1;
+      this.movedTableIndex = this.tableIndex;
       // document.getElementById(this.tableNameId + this.nowTableIndex).style.cursor="col-resize"; 
     } else if (this.rightX-this.x-scrollLeft <= this.space) {
       // this.isMousedown = false;
       this.cursorStyle = true;
       this.tableIndex = this.nowTableIndex;
-      // document.getElementById(this.tableNameId + this.nowTableIndex).style.cursor="col-resize"; 
+      this.movedTableIndex = this.tableIndex;
     } else {
+      // this.cursorStyle = true;
       this.cursorStyle = false;
       this.tableIndex = this.nowTableIndex;
+      console.log('mousemove');
     }
   }
   leftSpace() {
@@ -177,38 +176,67 @@ export class TableComponent implements OnInit {
   }
   mouseover(event:any,index:number){
     this.nowTableIndex = index;
+    if(this.moving) {
+      return;
+    }
+    this.movedTableIndex = index;
     let div = document.getElementById(this.tableNameId + index);
     this.leftX = div.offsetLeft;  //当前div左边两个的点的x值
     this.rightX = this.leftX + div.offsetWidth;  //当前div右边两个点的x的值  
-    
-    // this.tableIndex = index;
     console.log('mouseover');
   }
   mouseout(){
+    if(this.moving) {
+      return;
+    }
     this.tableIndex = -1;
     this.cursorStyle = false;
-    // this.isMousedown = false;
     console.log('mouseleave');
-  }
-  mouseleave2(event:any) {
-    // $("body").css("cursor","auto");
-    this.mouseout();
-    this.mouseup(event);
   }
 
   mousedown(event:any){
+    event.preventDefault();// 防止默认事件
     this.isMousedown = true;
-    window.getSelection().empty();
-  }
-  mouseup(event:any){
-    this.isMousedown = false;
-    this.cursorStyle = false;
     // window.getSelection().empty();
+    let bThis = this;
+    if(bThis.cursorStyle) {
+      bThis.moving = true;
+      $("#"+bThis.tableNameID1).unbind("mousemove");
+      $(document).bind("mousemove",function(e1){
+        // e1.preventDefault();
+        bThis.tableIndex = bThis.movedTableIndex;
+        $("html").css("cursor","col-resize");
+        console.log('e1');
+        let offset = e1.pageX - bThis.x;
+        bThis.x = e1.pageX;
+        bThis.y = e1.pageY; 
+        let minWidth = bThis.tableStyle[bThis.movedTableIndex]['minWidth'];
+        let width = bThis.tableStyle[bThis.movedTableIndex]['width'];
+        let newWidth = width + offset;
+        if(newWidth < minWidth) {
+          return;
+        }
+        bThis.sumWidth = Math.max(bThis.sumMinWidth, bThis.sumWidth+offset);
+        bThis.tableStyle[bThis.movedTableIndex]['width'] = Math.max(newWidth,minWidth);
+          
+      }).bind("mouseup",function(e2){
+        // e2.preventDefault();
+        $(document).unbind("mousemove");
+        bThis.moving = false;
+        $("html").css("cursor","auto");
+        // $("#"+bThis.tableNameId+bThis.nowTableIndex).css('cursor','pointer');
+        bThis.cursorStyle = false;
+        // bThis.mouseout();
+        console.log("e2");
+        $("#"+bThis.tableNameID1).bind("mousemove",function(e3){
+          console.log('wwwwwwwwwww:');
+          bThis.mousemove(e3);
+        });
+        $(document).unbind("mouseup");
+      });
+    }
   }
-  click() {
-    this.isMousedown = false;
-    console.log('click');
-  }
+  
   onscroll(event:any) {
     let target = event.target.scrollLeft;
     // var t = $("#"+this.tableNameID);
@@ -222,16 +250,8 @@ export class TableComponent implements OnInit {
     }else if(direction==='horizontal'){
         return element.scrollWidth>element.clientWidth;
     }
-}
+  }
 
-  // $(document).ready(function(){
-  //   $("button").bind({
-  //     click:function(){$("p").slideToggle();},
-  //     mouseover:function(){$("body").css("background-color","red");},  
-  //     mouseout:function(){$("body").css("background-color","#FFFFFF");}  
-  //   });
-  // });
- 
 
 
   ngOnDestroy() {

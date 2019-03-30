@@ -1,15 +1,16 @@
 
 <div style="display: inline-block; ">
   <!-- 表头 -->
-  <div class=" scrollbarStyle0" [id]="tableNameID"  (mousemove)="mousemove($event)" (mousedown)="mousedown($event)"
-    (mouseup)="mouseup($event)" (mouseleave)="mouseleave2($event)" (click)="click()" style="width: 600px; overflow: auto;">
-    <div class="tableName" [style.width]="sumWidth+10+'px'">
+  <div class=" scrollbarStyle0" [id]="tableNameID" 
+     style="width: 600px; overflow: auto;">
+    <div class="tableName" [id]="tableNameID1" [style.width]="sumWidth+10+'px'" 
+       (mousedown)="mousedown($event)" (mouseout)="mouseout()">
       <div [style.min-width]="i+1==tableStyle.length ? name['minWidth']+10+'px':name['minWidth']+'px'" 
         [style.width]="i+1==tableStyle.length ? name['width']+10+'px': name['width']+'px'"
         [style.cursor]="cursorStyle ? 'col-resize': 'auto'"
         [class]="tableIndex==i ? 'tableNameHeight tableMouseover' :'tableNameHeight' "
         *ngFor="let name of tableStyle; let i = index" [id]="tableNameId+i" (mouseover)="mouseover($event,i)"
-        (mouseout)="mouseout()">{{name.key}}</div>
+        >{{name.key}}</div>
     </div>
   </div>
 
