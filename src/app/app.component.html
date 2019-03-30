@@ -1,38 +1,44 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 
-<!-- 表头 -->
-<div style="width:1200px">
-  <div style="display: inline-block; ">
-  <div class="tableName">
-    <div [style.width]="name.width"  *ngFor="let name of tableStyle">{{name.key}}</div>
+<div *ngIf="table" style="background-color:#fafafa; width:1200px; height: 400px; overflow-y: auto;" > 
+  <p style="margin:20px;">表格组件</p>
+  <div>
+    <tableList *ngIf="table" [TableNames]="tableNames" [TableValues]="tableValues" [TableStyle]="tableStyle"></tableList>
   </div>
+  <p style="margin:20px;">日历组件</p>
+  <calendar></calendar>
+  <p style="margin:20px;">上传组件</p>
+  <div style="background-color:#fafafa;margin: 20px;">
+    <upload *ngIf="upload"></upload>
+  </div>
+</div>
 
-  <!-- 表格内容 -->
-  <div class="tableValueaa" >
-      <div class="tableValue" *ngFor="let values of tableValues">
-        <div *ngFor="let style of tableStyle">
-            <!-- 文本 -->
-            <div *ngIf="style.type == 'text'" [style.width]="style.width" >{{values[style.key]}}</div>
-            <!-- 操作组 -->
-            <div *ngIf="style.type == 'operate'" [style.width]="style.width"  class="operateGroup">
-              <div *ngFor="let val of style.val">
-                <!-- 编辑 -->
-                <div *ngIf="val.type == 'edit'" class="edit" title="{{val.name}}"></div>
-                <!-- 删除 -->
-                <div *ngIf="val.type == 'delete'" class="delete" title="{{val.name}}"></div>
-              </div>
-            </div>
-        </div>
-        <!-- <div [style.width]="width" >{{values.id}}</div>
-        <div [style.width]="width" >{{values.name}}</div>
-        <div [style.width]="width" >{{values.age}}</div>
-        <div [style.width]="width" >{{values.class}}</div>
-        <div [style.width]="width" >{{values.sex}}</div>
-        <div [style.width]="width" >{{values.Hobby}}</div> -->
-      </div>
-  </div>
-</div>
-</div>
+
+<button (click)="uploadIf()">upload</button>
+<button (click)="tableIf()">table</button>
+<button (click)="circleProgressIf()">circle-progress</button>
+<a style="margin:20px" href="http://localhost:9001/file/download">文件下载</a>
+
+<!-- <div *ngIf="circleProgress" style="width:500px; height:300px; background:bisque">
+  <circle-progress
+  [percent]=percent
+  [radius]="100"
+  [outerStrokeWidth]="16"
+  [innerStrokeWidth]="8"
+  [outerStrokeColor]="'#78C000'"
+  [innerStrokeColor]="'#C7E596'"
+  [animation]="true"
+  [animationDuration]="300" 
+  [startFromZero]=false
+  [showInnerStroke]=true
+  [backgroundStrokeWidth]=2
+  [subtitle]="'true'"
+></circle-progress> -->
+<!-- </div> -->
+
+
+
+
 
 <router-outlet></router-outlet>

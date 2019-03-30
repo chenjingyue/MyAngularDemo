@@ -1,0 +1,9 @@
+
+
+<!-- 上传组件 -->
+<div class="upload">
+  <input type="file" id="uploadId" style="display:none" (change)="inputChange($event)"/>
+  <div class="inputBox" placeholder="请选择文件...">{{fileName}}</div>
+  <button class="uploadButton" (click)="uploadClick()">{{buttonValue}}</button>
+  <button class="uploadButton" style="margin-left:20px" (click)="upload()">{{'提交'}}</button>
+</div>
