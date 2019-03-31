@@ -1,6 +1,8 @@
 import { Component, OnInit,OnDestroy, Input, Output, EventEmitter} from '@angular/core';
 import * as $ from 'jquery';
 
+import{ DomSanitizer }from'@angular/platform-browser';
+
 @Component({
   selector: 'tableList',
   templateUrl: './table.component.html',
@@ -36,11 +38,12 @@ export class TableComponent implements OnInit {
   tableNameID1:string = "tableNameID1";
   
   ngAfterViewInit() {
-    console.log("ngAfterViewInit");
+    console.log("ngAfterViewInit" );
     let bThis = this;
     $("#"+this.tableNameID1).bind("mousemove",function(e3){
       bThis.mousemove(e3);
     })
+
   }
   ngOnInit() {
     this.initParam();
@@ -55,6 +58,12 @@ export class TableComponent implements OnInit {
     console.log("table ngOnInit");
 
   }
+  // bgpictrue=this.sanitizer.bypassSecurityTrustStyle("url('"+"radioDefault.png"+"')");
+  constructor(
+
+    private sanitizer: DomSanitizer
+
+){}
   initParam(){
     
     for (let index = 0; index < this.tableStyle.length; index++) {
@@ -251,11 +260,30 @@ export class TableComponent implements OnInit {
         return element.scrollWidth>element.clientWidth;
     }
   }
+  selectButtonSrc:any = {
+    "default":"url('assets/image/selectDefault.png')",
+    "selected":"url('assets/image/selected.png')"
+  }
+  // imageSrc:string = this.selectButtonSrc['default'];
+  // 选择点击事件
+  click(values:any,index:number) {
+    console.log(values);
+    let value = this.tableValues[index];
+    if (value['select']) {
+      this.tableValues[index]['select'] = false;
+      // this.imageSrc = this.selectButtonSrc['default'];
+    } else {
+      this.tableValues[index]['select'] = true;
+      // this.imageSrc = this.selectButtonSrc['selected'];
+    }
+    // let aa = angular.copy(source, [destination]);
+    // this.tableValues[index] = value;
+  }
 
 
 
   ngOnDestroy() {
-    console.log("this is table!!")
+    console.log("this is table!!");
   }
 
 }

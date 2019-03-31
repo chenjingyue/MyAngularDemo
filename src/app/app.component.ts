@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as $ from 'jquery';
+import{ DomSanitizer }from'@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,12 @@ import * as $ from 'jquery';
 })
 export class AppComponent implements OnInit,OnDestroy {
 
-  
+  constructor(
+
+    private sanitizer: DomSanitizer
+
+){}
+bgpictrue=this.sanitizer.bypassSecurityTrustStyle("url('"+"src\assets\image\radioDefault.png"+"')");
 
   table:boolean = true;
   upload:boolean = true;
@@ -72,7 +78,15 @@ export class AppComponent implements OnInit,OnDestroy {
       }
       this.tableValues.push(object);
     }
+    
     this.tableStyle = [
+      { key:'',
+        minWidth:40,
+        width:40,
+        imgWidth: 20,
+        imgHeight: 20,
+        type:'button'
+      },
       { key:'id',
         minWidth:100,
         width:100,
