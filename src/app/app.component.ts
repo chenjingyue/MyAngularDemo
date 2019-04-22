@@ -34,8 +34,19 @@ bgpictrue=this.sanitizer.bypassSecurityTrustStyle("url('"+"src\assets\image\radi
   t1:any;
   circleProgress:boolean = true;
 
+  list:any = [];
+  flag:boolean = false;
+  click() {
+    this.flag = !this.flag;
+  }
   ngOnInit() {
-    this.initTableParam();
+    this.list = [
+      "aaaa",
+      "bbbb",
+      "cccc"
+    ]
+    // this.initTableParam();
+
     // this.t1=window.setInterval(refreshCount, 200);
     // var bThis = this;
     // function refreshCount() {
@@ -85,7 +96,8 @@ bgpictrue=this.sanitizer.bypassSecurityTrustStyle("url('"+"src\assets\image\radi
         width:40,
         imgWidth: 20,
         imgHeight: 20,
-        type:'button'
+        type:'button',
+        isView:false
       },
       { key:'id',
         minWidth:100,

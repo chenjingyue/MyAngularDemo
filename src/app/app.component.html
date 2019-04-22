@@ -20,6 +20,23 @@
 <button (click)="circleProgressIf()">circle-progress</button>
 <a style="margin:20px" href="http://localhost:9001/file/download">文件下载</a>
 
+<!-- 下拉框 -->
+<div class="dropDownBox">
+  <!-- 显示 -->
+  <div class="dropDownBox_display">
+    <input type="text" class="dropDownBox_input" >
+    <div class="dropDownBox_button" title="下拉按钮" (click)="click()"></div>
+  </div>
+  <!-- 列表 -->
+  <div *ngIf="flag" class="dropDownBox_list">
+    <!-- 循环显示列表 -->
+    <div *ngFor="let val of list">{{val}}</div>
+  </div>
+</div>
+<p>
+  AAAAAAAAAAAAAAAAAAaa
+</p>
+
 <!-- <div *ngIf="circleProgress" style="width:500px; height:300px; background:bisque">
   <circle-progress
   [percent]=percent
