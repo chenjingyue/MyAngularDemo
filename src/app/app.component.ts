@@ -10,42 +10,57 @@ import{ DomSanitizer }from'@angular/platform-browser';
 export class AppComponent implements OnInit,OnDestroy {
 
   constructor(
-
-    private sanitizer: DomSanitizer
-
-){}
-bgpictrue=this.sanitizer.bypassSecurityTrustStyle("url('"+"src\assets\image\radioDefault.png"+"')");
-
-  table:boolean = true;
-  upload:boolean = true;
-  uploadIf() {
-    this.upload = !this.upload;
-  }
-
-  tableIf() {
-    this.table = !this.table;
-  }
-
+      private sanitizer: DomSanitizer
+  ){}
 
   tableNames:any;
   tableValues:any;
   tableStyle:any;
+
+
   percent:number = 5;
   t1:any;
   circleProgress:boolean = true;
 
   list:any = [];
   flag:boolean = false;
-  click() {
-    this.flag = !this.flag;
-  }
+
+  buttonList:any = [
+    {
+      key:"table",
+      value:"tableComponent",
+      index:1
+    },
+    {
+      key:"calendar",
+      value:"calendarComponent",
+      index:2
+    },
+    {
+      key:"upload",
+      value:"uploadComponent",
+      index:3
+    }
+  ];
+  buttonStatus:any = {
+    table:{
+      view:true
+    },
+    calendar:{
+      view:true
+    },
+    upload:{
+      view:true
+    }
+  };
+ 
   ngOnInit() {
     this.list = [
       "aaaa",
       "bbbb",
       "cccc"
     ]
-    // this.initTableParam();
+    this.initTableParam();
 
     // this.t1=window.setInterval(refreshCount, 200);
     // var bThis = this;
@@ -62,12 +77,20 @@ bgpictrue=this.sanitizer.bypassSecurityTrustStyle("url('"+"src\assets\image\radi
     // window.clearInterval(t1);
   }
 
-  ngOnDestroy() {
-    window.clearInterval(this.t1);
+  buttonClick(index:number) {
+    let key = this.buttonList[index]['key'];
+    let flag = this.buttonStatus[key]['view'];
+    this.buttonStatus[key]['view'] = !flag;
   }
+
+  ngOnDestroy() {
+    // window.clearInterval(this.t1);
+  }
+
   circleProgressIf() {
     this.circleProgress = !this.circleProgress;
   }
+
   initTableParam() {
     this.tableNames = [
       "id",

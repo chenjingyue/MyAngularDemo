@@ -9,13 +9,16 @@ import { UploadCompoent } from '../component/upload/upload.component';
 import { CalendarComponent } from '../component/calendar/calendar.component';
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { TranslationService } from 'src/service/translation.service';
+import { TranslationPipe } from 'src/pipe/translation.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
     UploadCompoent,
-    CalendarComponent
+    CalendarComponent,
+    TranslationPipe
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
       animationDuration: 300
     })
   ],
-  providers: [],
+  providers: [TranslationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

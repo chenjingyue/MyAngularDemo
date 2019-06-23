@@ -10,7 +10,13 @@
         [style.cursor]="cursorStyle ? 'col-resize': 'auto'"
         [class]="tableIndex==i ? 'tableNameHeight tableMouseover' :'tableNameHeight' "
         *ngFor="let name of tableStyle; let i = index" [id]="tableNameId+i" (mouseover)="mouseover($event,i)"
-        >{{name.key}}</div>
+        >
+          <div *ngIf="name.type!=='button'">{{name.key}}</div>
+          <div *ngIf="name.type=='button'" class="imgRadioButton"
+            style="cursor: pointer;" (click)="selectAll()"
+            [style.background-image]="isSelectAll?selectButtonSrc['selected']:selectButtonSrc['default']"
+            [style.width]="name['imgWidth']+'px'" [style.height]="name['imgHeight']+'px'">{{name.key}}</div>
+        </div>
     </div>
   </div>
 
@@ -21,7 +27,6 @@
         <!-- 文本 -->
         <div *ngIf="style.type == 'text'" title="{{values[style.key]}}">{{values[style.key]}}</div>
         <!-- 选择按钮 -->
-
         <div *ngIf="style.type == 'button'" class="pointer" 
           [style.width]="style['imgWidth']+'px'" [style.height]="style['imgHeight']+'px'" 
           [style.background-image]="values['select']?selectButtonSrc['selected']:selectButtonSrc['default'] "

@@ -1,22 +1,31 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
-
-<div *ngIf="table" style="background-color:#fafafa; width:1200px; height: 400px; overflow-y: auto;" > 
-  <p style="margin:20px;">表格组件</p>
-  <div>
-    <tableList *ngIf="table" [TableNames]="tableNames" [TableValues]="tableValues" [TableStyle]="tableStyle"></tableList>
-  </div>
-  <p style="margin:20px;">日历组件</p>
-  <calendar></calendar>
-  <p style="margin:20px;">上传组件</p>
-  <div style="background-color:#fafafa;margin: 20px;">
-    <upload *ngIf="upload"></upload>
+<div class="buttonController" >
+  <div *ngFor="let button of buttonList; let i = index" >
+      <button [class]="buttonStatus[button['key']]['view'] ? 'button':'button_gray'" (click)="buttonClick(i)">{{button.key | translationX}}</button>
   </div>
 </div>
 
+<div  style="background-color:#fafafa; width:1200px; height: 400px; overflow-y: auto;" > 
+  <div class="surroundBorder" *ngIf="buttonStatus['table']['view']">
+      <p style="margin:20px;">表格组件</p>
+    <tableList [TableNames]="tableNames" [TableValues]="tableValues" [TableStyle]="tableStyle"></tableList>
+  </div>
+  <div class="surroundBorder" *ngIf="buttonStatus['calendar']['view']">
+      <p style="margin:20px;">日历组件</p>
+      <calendar></calendar>
+  </div>
+  <div class="surroundBorder" *ngIf="buttonStatus['upload']['view']">
+      <p style="margin:20px;">上传组件</p>
+      <div style="background-color:#fafafa;margin: 20px;">
+        <upload ></upload>
+      </div>
+  </div>
+  
+</div>
 
-<button (click)="uploadIf()">upload</button>
-<button (click)="tableIf()">table</button>
+<div style="margin: 100px"></div>
+
 <button (click)="circleProgressIf()">circle-progress</button>
 <a style="margin:20px" href="http://localhost:9001/file/download">文件下载</a>
 
