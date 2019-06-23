@@ -10,20 +10,29 @@
         [style.cursor]="cursorStyle ? 'col-resize': 'auto'"
         [class]="tableIndex==i ? 'tableNameHeight tableMouseover' :'tableNameHeight' "
         *ngFor="let name of tableStyle; let i = index" [id]="tableNameId+i" (mouseover)="mouseover($event,i)"
-        >{{name.key}}</div>
+        >
+          <div *ngIf="name.type!=='button'">{{name.key}}</div>
+          <div *ngIf="name.type=='button'" class="imgRadioButton"
+            style="cursor: pointer;" (click)="selectAll()"
+            [style.background-image]="isSelectAll?selectButtonSrc['selected']:selectButtonSrc['default']"
+            [style.width]="name['imgWidth']+'px'" [style.height]="name['imgHeight']+'px'">{{name.key}}</div>
+        </div>
     </div>
   </div>
 
   <!-- 表格内容 -->
   <div class="tableValues scrollbarStyle" [id]="tableValueID" (scroll)="onscroll($event)" style="width: 600px; overflow: auto;">
-    <div class="tableValue" [style.width]="sumWidth+'px'" *ngFor="let values of tableValues">
-      <div  *ngFor="let style of tableStyle">
+    <div class="tableValue" [style.width]="sumWidth+'px'" *ngFor="let values of tableValues; let i=index">
+      <div  *ngFor="let style of tableStyle" [style.min-width]="style['minWidth']+'px'" [style.width]="style['width']+'px'" >
         <!-- 文本 -->
-        <div *ngIf="style.type == 'text'" class="pointer" [style.min-width]="style['minWidth']+'px'"
-          [style.width]="style['width']+'px'" title="{{values[style.key]}}">{{values[style.key]}}</div>
+        <div *ngIf="style.type == 'text'" title="{{values[style.key]}}">{{values[style.key]}}</div>
+        <!-- 选择按钮 -->
+        <div *ngIf="style.type == 'button'" class="pointer" 
+          [style.width]="style['imgWidth']+'px'" [style.height]="style['imgHeight']+'px'" 
+          [style.background-image]="values['select']?selectButtonSrc['selected']:selectButtonSrc['default'] "
+          (click)="click(values,i)" ></div>
         <!-- 操作组 -->
-        <div *ngIf="style.type == 'operate'" [style.min-width]="style['minWidth']+'px'"
-          [style.width]="style['width']+'px'" class="operateGroup">
+        <div *ngIf="style.type == 'operate'"  class="operateGroup">
           <div *ngFor="let val of style.val">
             <!-- 编辑 -->
             <div *ngIf="val.type == 'edit'" class="edit pointer" title="{{val.name}}"></div>

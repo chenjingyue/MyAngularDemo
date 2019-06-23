@@ -84,13 +84,13 @@
 .leftArrow{
     width: 20px;
     height: 20px;
-    background-image: url('src\assets\image\leftArrow.png');
+    background-image: url('src/assets/image/leftArrow.png');
     cursor: pointer;
 }
 .rightArrow{
     width: 20px;
     height: 20px;
-    background-image: url('src\assets\image\rightArrow.png');
+    background-image: url('src/assets/image/rightArrow.png');
     cursor: pointer;
 }
 .numView{

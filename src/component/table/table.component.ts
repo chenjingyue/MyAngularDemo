@@ -1,5 +1,7 @@
-import { Component, OnInit,OnDestroy, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import * as $ from 'jquery';
+
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'tableList',
@@ -8,39 +10,40 @@ import * as $ from 'jquery';
 })
 export class TableComponent implements OnInit {
 
-  tableNames:any;
-  tableValues:any;
-  tableStyle:any;
-  sumWidth:number = 0;
-  sumMinWidth:number = 0;
+  tableNames: any;
+  tableValues: any;
+  tableStyle: any;
+  sumWidth: number = 0;
+  sumMinWidth: number = 0;
 
   // @Input("tableNames") tableNames: any;
   // @Input("tableValues") tableValues: any;
   // @Input("tableStyle") tableStyle: any;
 
-  @Input() set TableNames(tableNames:any){
+  @Input() set TableNames(tableNames: any) {
     this.tableNames = tableNames;
   }
 
-  @Input() set TableValues(tableValues:any){
+  @Input() set TableValues(tableValues: any) {
     this.tableValues = tableValues;
   }
 
-  @Input() set TableStyle(tableStyle:any){
+  @Input() set TableStyle(tableStyle: any) {
     this.tableStyle = tableStyle;
   }
 
   @Output() output = new EventEmitter();
 
-  
-  tableNameID1:string = "tableNameID1";
-  
+
+  tableNameID1: string = "tableNameID1";
+
   ngAfterViewInit() {
     console.log("ngAfterViewInit");
     let bThis = this;
-    $("#"+this.tableNameID1).bind("mousemove",function(e3){
+    $("#" + this.tableNameID1).bind("mousemove", function (e3) {
       bThis.mousemove(e3);
     })
+
   }
   ngOnInit() {
     this.initParam();
@@ -55,8 +58,14 @@ export class TableComponent implements OnInit {
     console.log("table ngOnInit");
 
   }
-  initParam(){
-    
+  // bgpictrue=this.sanitizer.bypassSecurityTrustStyle("url('"+"radioDefault.png"+"')");
+  constructor(
+
+    private sanitizer: DomSanitizer
+
+  ) { }
+  initParam() {
+
     for (let index = 0; index < this.tableStyle.length; index++) {
       let width = this.tableStyle[index]['width'];
       let minWidth = this.tableStyle[index]['minWidth'];
@@ -86,78 +95,85 @@ export class TableComponent implements OnInit {
       this.tableValues.push(object);
     }
     this.tableStyle = [
-      { key:'id',
-        width:'100px',
-        type:'text'
-      },
-      { key:'name',
-        width:'100px',
-        type:'text'
-      },
-      { key:'age',
-        width:'100px',
-        type:'text'
-      },
-      { key:'class',
-        width:'100px',
-        type:'text'
-      },
-      { key:'sex',
-        width:'100px',
-        type:'text'
-      },
-      { key:'Hobby',
-        width:'100px',
-        type:'text'
+      {
+        key: 'id',
+        width: '100px',
+        type: 'text'
       },
       {
-        key:'operate',
-        width:'120px',
-        type:'operate',
-        val:[
+        key: 'name',
+        width: '100px',
+        type: 'text'
+      },
+      {
+        key: 'age',
+        width: '100px',
+        type: 'text'
+      },
+      {
+        key: 'class',
+        width: '100px',
+        type: 'text'
+      },
+      {
+        key: 'sex',
+        width: '100px',
+        type: 'text'
+      },
+      {
+        key: 'Hobby',
+        width: '100px',
+        type: 'text'
+      },
+      {
+        key: 'operate',
+        width: '120px',
+        type: 'operate',
+        val: [
           {
-            name:'编辑',
-            type:'edit'
+            name: '编辑',
+            type: 'edit'
           },
           {
-            name:'删除',
-            type:'delete'
+            name: '删除',
+            type: 'delete'
           }
         ]
       }
     ];
   }
-  x:number = 0;
-  y:number = 0;
-  leftX:number = 0;
-  rightX:number = 0;
-  tableNameId:string = 'tableNameId_';
-  nowTableIndex:number = -1;
-  tableIndex:number = -1;
-  movedTableIndex:number = -1;
-  cursorStyle:boolean = false;
-  space:number = 3;
-  isMousedown:boolean = false;
-  tableNameID:string = "tableNameID";
-  tableValueID:string = "talbeValueID";
-  moving:boolean = false;
+  x: number = 0;
+  y: number = 0;
+  leftX: number = 0;
+  rightX: number = 0;
+  tableNameId: string = 'tableNameId_';
+  nowTableIndex: number = -1;
+  tableIndex: number = -1;
+  movedTableIndex: number = -1;
+  cursorStyle: boolean = false;
+  space: number = 3;
+  isMousedown: boolean = false;
+  tableNameID: string = "tableNameID";
+  tableValueID: string = "talbeValueID";
+  moving: boolean = false;
+  selectedDataList: any = [];
   // index:number = -1;
-  mousemove(event:any){
+  mousemove(event: any) {
     event.preventDefault();
     this.x = event.pageX;
-    this.y = event.pageY; 
+    this.y = event.pageY;
     this.leftSpace();
-    let element = $("#"+this.tableValueID);
+    let element = $("#" + this.tableValueID);
     let scrollLeft = 0;
-    if (this.hasScrolled(element[0],"horizontal")){
+    if (this.hasScrolled(element[0], "horizontal")) {
       scrollLeft = element[0].scrollLeft;
     }
-    if(this.nowTableIndex > 0 && this.x+scrollLeft-this.leftX <= this.space) {
+    if (this.nowTableIndex > 0 && this.x + scrollLeft - this.leftX <= this.space) {
       this.cursorStyle = true;
-      this.tableIndex = this.nowTableIndex-1;
+      this.tableIndex = this.nowTableIndex - 1;
       this.movedTableIndex = this.tableIndex;
       // document.getElementById(this.tableNameId + this.nowTableIndex).style.cursor="col-resize"; 
-    } else if (this.rightX-this.x-scrollLeft <= this.space) {
+    } else if (this.rightX - this.x - scrollLeft <= this.space) {
       // this.isMousedown = false;
       this.cursorStyle = true;
       this.tableIndex = this.nowTableIndex;
@@ -174,9 +190,9 @@ export class TableComponent implements OnInit {
     this.leftX = div.offsetLeft;  //当前div左边两个的点的x值
     this.rightX = this.leftX + div.offsetWidth;  //当前div右边两个点的x的值 
   }
-  mouseover(event:any,index:number){
+  mouseover(event: any, index: number) {
     this.nowTableIndex = index;
-    if(this.moving) {
+    if (this.moving) {
       return;
     }
     this.movedTableIndex = index;
@@ -185,8 +201,8 @@ export class TableComponent implements OnInit {
     this.rightX = this.leftX + div.offsetWidth;  //当前div右边两个点的x的值  
     console.log('mouseover');
   }
-  mouseout(){
-    if(this.moving) {
+  mouseout() {
+    if (this.moving) {
       return;
     }
     this.tableIndex = -1;
@@ -194,41 +210,41 @@ export class TableComponent implements OnInit {
     console.log('mouseleave');
   }
 
-  mousedown(event:any){
+  mousedown(event: any) {
     event.preventDefault();// 防止默认事件
     this.isMousedown = true;
     // window.getSelection().empty();
     let bThis = this;
-    if(bThis.cursorStyle) {
+    if (bThis.cursorStyle) {
       bThis.moving = true;
-      $("#"+bThis.tableNameID1).unbind("mousemove");
-      $(document).bind("mousemove",function(e1){
+      $("#" + bThis.tableNameID1).unbind("mousemove");
+      $(document).bind("mousemove", function (e1) {
         // e1.preventDefault();
         bThis.tableIndex = bThis.movedTableIndex;
-        $("html").css("cursor","col-resize");
+        $("html").css("cursor", "col-resize");
         console.log('e1');
         let offset = e1.pageX - bThis.x;
         bThis.x = e1.pageX;
-        bThis.y = e1.pageY; 
+        bThis.y = e1.pageY;
         let minWidth = bThis.tableStyle[bThis.movedTableIndex]['minWidth'];
         let width = bThis.tableStyle[bThis.movedTableIndex]['width'];
         let newWidth = width + offset;
-        if(newWidth < minWidth) {
+        if (newWidth < minWidth) {
           return;
         }
-        bThis.sumWidth = Math.max(bThis.sumMinWidth, bThis.sumWidth+offset);
-        bThis.tableStyle[bThis.movedTableIndex]['width'] = Math.max(newWidth,minWidth);
-          
-      }).bind("mouseup",function(e2){
+        bThis.sumWidth = Math.max(bThis.sumMinWidth, bThis.sumWidth + offset);
+        bThis.tableStyle[bThis.movedTableIndex]['width'] = Math.max(newWidth, minWidth);
+
+      }).bind("mouseup", function (e2) {
         // e2.preventDefault();
         $(document).unbind("mousemove");
         bThis.moving = false;
-        $("html").css("cursor","auto");
+        $("html").css("cursor", "auto");
         // $("#"+bThis.tableNameId+bThis.nowTableIndex).css('cursor','pointer');
         bThis.cursorStyle = false;
         // bThis.mouseout();
         console.log("e2");
-        $("#"+bThis.tableNameID1).bind("mousemove",function(e3){
+        $("#" + bThis.tableNameID1).bind("mousemove", function (e3) {
           console.log('wwwwwwwwwww:');
           bThis.mousemove(e3);
         });
@@ -236,26 +252,70 @@ export class TableComponent implements OnInit {
       });
     }
   }
-  
-  onscroll(event:any) {
+
+  onscroll(event: any) {
     let target = event.target.scrollLeft;
     // var t = $("#"+this.tableNameID);
-    $("#"+this.tableNameID).scrollLeft(target);
+    $("#" + this.tableNameID).scrollLeft(target);
     // document.getElementById(this.tableNameID).scrollLeft = target;
   }
   // 判断是否存在滚动条
-  hasScrolled(element,direction){
-    if(direction==='vertical'){
-        return element.scrollHeight>element.clientHeight;
-    }else if(direction==='horizontal'){
-        return element.scrollWidth>element.clientWidth;
+  hasScrolled(element, direction) {
+    if (direction === 'vertical') {
+      return element.scrollHeight > element.clientHeight;
+    } else if (direction === 'horizontal') {
+      return element.scrollWidth > element.clientWidth;
     }
+  }
+  // 单选按钮图片
+  selectButtonSrc: any = {
+    "default": "url('assets/image/selectDefault.png')",
+    "selected": "url('assets/image/selected.png')"
+  }
+  // imageSrc:string = this.selectButtonSrc['default'];
+
+  // 选择点击事件
+  click(values: any, index: number) {
+    console.log(values);
+    this.isSelectAll = false;
+    let value = this.tableValues[index];
+    // this.tableValues.push(value);
+    if (value['select']) {
+      this.tableValues[index]['select'] = false;
+    } else {
+      this.tableValues[index]['select'] = true;
+      let flag = true;
+      this.tableValues.forEach(element => {
+        if (!element['select']) {
+          flag = false;
+        }
+      });
+      this.isSelectAll = flag ? true : false;
+    }
+    // let aa = angular.copy(source, [destination]);
+    // this.tableValues[index] = value;
+  }
+  isSelectAll: boolean = false;
+  //全选
+  selectAll() {
+    if (this.isSelectAll) {
+      this.isSelectAll = false;
+      this.tableValues.forEach(element => {
+        element['select'] = false;
+      });
+    } else {
+      this.isSelectAll = true;
+      this.tableValues.forEach(element => {
+        element['select'] = true;
+      });
+    }
+
   }
 
 
 
   ngOnDestroy() {
-    console.log("this is table!!")
+    console.log("this is table!!");
   }
 
 }
