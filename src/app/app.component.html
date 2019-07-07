@@ -6,6 +6,10 @@
   </div>
 </div>
 
+<div style="background-color:#fafafa;margin: 20px;width: 300px;">
+  <tree  [Treelists]="treelists" (output)="outputEvent($event)"></tree>
+</div>
+
 <div  style="background-color:#fafafa; width:1200px; height: 400px; overflow-y: auto;" > 
   <div class="surroundBorder" *ngIf="buttonStatus['table']['view']">
       <p style="margin:20px;">表格组件</p>

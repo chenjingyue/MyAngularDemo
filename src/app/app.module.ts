@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { TableComponent } from '../component/table/table.component';
 import { UploadCompoent } from '../component/upload/upload.component';
 import { CalendarComponent } from '../component/calendar/calendar.component';
+import { TreeCompoent } from '../component/tree/tree.component';
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TranslationService } from 'src/service/translation.service';
@@ -18,7 +19,8 @@ import { TranslationPipe } from 'src/pipe/translation.pipe';
     TableComponent,
     UploadCompoent,
     CalendarComponent,
-    TranslationPipe
+    TranslationPipe,
+    TreeCompoent
   ],
   imports: [
     BrowserModule,

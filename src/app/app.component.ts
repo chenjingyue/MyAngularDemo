@@ -53,6 +53,95 @@ export class AppComponent implements OnInit,OnDestroy {
       view:true
     }
   };
+
+  outputEvent(event){
+    console.log("app:"+JSON.stringify(this.treelists));
+  }
+
+  treelists = [{
+    "id":0,
+    "parent": -1,
+    "name": "A公司",
+    "open": true,
+    "deep": 0,
+    "select":false,
+    "children": [
+      {
+        "id":0,
+        "parent": 0,
+        "name": "售前部",
+        "open": true,
+        "deep": 1,
+        "select":false,
+        "children": []
+      },
+      {
+        "id":1,
+        "parent": 0,
+        "name": "销售部",
+        "open": true,
+        "deep": 1,
+        "select":false,
+        "children": [
+          {
+            "id":0,
+            "parent": 1,
+            "name": "销售总监",
+            "open": true,
+            "deep": 2,
+            "select":false,
+            "children": []
+          }
+        ]
+      },
+      {
+        "id":2,
+        "parent": 0,
+        "name": "安全事业部",
+        "open": true,
+        "deep": 1,
+        "select":false,
+        "children": []
+      },
+      {
+        "id":3,
+        "parent": 0,
+        "name": "系统部",
+        "open": true,
+        "deep": 1,
+        "select":false,
+        "children": []
+      },
+      {
+        "id":4,
+        "parent": 0,
+        "name": "开发部",
+        "open": true,
+        "deep": 1,
+        "select":false,
+        "children": [
+          {
+            "id":0,
+            "parent": 4,
+            "name": "项目组",
+            "open": true,
+            "deep": 2,
+            "select":false,
+            "children": []
+          },
+          {
+            "id":1,
+            "parent": 4,
+            "name": "产品组",
+            "open": true,
+            "deep": 2,
+            "select":false,
+            "children": []
+          }
+        ]
+      }
+    ]
+  }];
  
   ngOnInit() {
     this.list = [
