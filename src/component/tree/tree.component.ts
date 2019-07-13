@@ -73,12 +73,8 @@ export class TreeCompoent implements OnInit {
     }
   }
 
-  cancel(item, index) {
-
-  }
 
   open(item, index) {
-    console.log("item:" + JSON.stringify(item), "; index:" + index);
     let open = this.treelists[index]['open'];
     if (open) {
       this.openSun(this.treelists[index], !open);

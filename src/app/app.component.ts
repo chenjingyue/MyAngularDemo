@@ -73,7 +73,17 @@ export class AppComponent implements OnInit,OnDestroy {
         "open": true,
         "deep": 1,
         "select":false,
-        "children": []
+        "children": [
+          {
+            "id":0,
+            "parent": 0,
+            "name": "售前组",
+            "open": true,
+            "deep": 2,
+            "select":false,
+            "children": []
+          }
+        ]
       },
       {
         "id":1,
@@ -101,7 +111,17 @@ export class AppComponent implements OnInit,OnDestroy {
         "open": true,
         "deep": 1,
         "select":false,
-        "children": []
+        "children": [
+          {
+            "id":0,
+            "parent": 2,
+            "name": "安全总监",
+            "open": true,
+            "deep": 2,
+            "select":false,
+            "children": []
+          }
+        ]
       },
       {
         "id":3,
@@ -110,7 +130,17 @@ export class AppComponent implements OnInit,OnDestroy {
         "open": true,
         "deep": 1,
         "select":false,
-        "children": []
+        "children": [
+          {
+            "id":0,
+            "parent": 3,
+            "name": "安全总监",
+            "open": true,
+            "deep": 2,
+            "select":false,
+            "children": []
+          }
+        ]
       },
       {
         "id":4,

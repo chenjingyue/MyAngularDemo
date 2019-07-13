@@ -3,17 +3,15 @@
 <!-- 上传组件 -->
 <ul >
   　　<li *ngFor="let item of treelists; let i = index" class="ng-scope">
-  　　　　<div >
-  　　　　　　<span >
+  　　　　<div style="display: flex">
+  　　　　　　<span *ngIf="item.children && item.children.length">
   　　　　　　　　<i><img [src]="item.open?openImgs['down']:openImgs['right']" (click)="open(item,i)" /></i>
   　　　　　　</span>
   　　　　　　<span >
   　　　　　　　　<img [src]="item.select?selectImgs['select']:selectImgs['default']" class="department_icon" 
                     (click)="select(item,i)" />
   　　　　　　</span>
-  　　　　　　<span >
-  　　　　　　　　<span >{{item.name}}</span>
-  　　　　　　</span>
+  　　　　　　<span style="margin-left: 10px">{{item.name}}</span>
 　　　　</div>
   　　　　<!--调用组件本身并 传值给下级: [treelists]="item.items"-->
   <!-- 　　　　<tree *ngIf="item.open && item.children && item.children.length" [treelists]="item.children"></tree> -->

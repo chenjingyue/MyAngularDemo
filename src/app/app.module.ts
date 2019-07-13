@@ -12,6 +12,7 @@ import { TreeCompoent } from '../component/tree/tree.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TranslationService } from 'src/service/translation.service';
 import { TranslationPipe } from 'src/pipe/translation.pipe';
+import { DragDirective } from 'src/directive/drag.directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TranslationPipe } from 'src/pipe/translation.pipe';
     UploadCompoent,
     CalendarComponent,
     TranslationPipe,
-    TreeCompoent
+    TreeCompoent,
+    DragDirective
   ],
   imports: [
     BrowserModule,
