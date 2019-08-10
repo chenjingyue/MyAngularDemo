@@ -12,6 +12,11 @@ export class AppComponent implements OnInit,OnDestroy {
   constructor(
       private sanitizer: DomSanitizer
   ){}
+  childData:number = 1;
+  child:number = 2;
+  add () {
+    this.child ++;
+  }
 
   tableNames:any;
   tableValues:any;

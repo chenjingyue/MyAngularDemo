@@ -8,6 +8,7 @@ import { TableComponent } from '../component/table/table.component';
 import { UploadCompoent } from '../component/upload/upload.component';
 import { CalendarComponent } from '../component/calendar/calendar.component';
 import { TreeCompoent } from '../component/tree/tree.component';
+import { ChildComponent } from '../component/child/child.component';
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TranslationService } from 'src/service/translation.service';
@@ -22,6 +23,7 @@ import { DragDirective } from 'src/directive/drag.directive';
     CalendarComponent,
     TranslationPipe,
     TreeCompoent,
+    ChildComponent,
     DragDirective
   ],
   imports: [
