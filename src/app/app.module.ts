@@ -16,6 +16,9 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TranslationService } from 'src/service/translation.service';
 import { TranslationPipe } from 'src/pipe/translation.pipe';
 import { DragDirective } from 'src/directive/drag.directive';
+import { LoginComponent } from 'src/component/login/login.component';
+import { HomeComponent } from 'src/component/home/home.component';
+import { RouteguardService } from 'src/service/routeguard.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { DragDirective } from 'src/directive/drag.directive';
     ChildComponent,
     DragDirective,
     VersionParentComponent,
-    VersionChildComponent
+    VersionChildComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +49,7 @@ import { DragDirective } from 'src/directive/drag.directive';
       animationDuration: 300
     })
   ],
-  providers: [TranslationService],
+  providers: [TranslationService,RouteguardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
