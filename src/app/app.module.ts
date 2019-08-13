@@ -9,6 +9,8 @@ import { UploadCompoent } from '../component/upload/upload.component';
 import { CalendarComponent } from '../component/calendar/calendar.component';
 import { TreeCompoent } from '../component/tree/tree.component';
 import { ChildComponent } from '../component/child/child.component';
+import { VersionParentComponent } from '../component/ngOnChanges/version-parent.component';
+import { VersionChildComponent } from '../component/ngOnChanges/version-child.component';
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TranslationService } from 'src/service/translation.service';
@@ -24,7 +26,9 @@ import { DragDirective } from 'src/directive/drag.directive';
     TranslationPipe,
     TreeCompoent,
     ChildComponent,
-    DragDirective
+    DragDirective,
+    VersionParentComponent,
+    VersionChildComponent
   ],
   imports: [
     BrowserModule,
