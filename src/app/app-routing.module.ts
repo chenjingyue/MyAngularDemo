@@ -4,6 +4,7 @@ import { LoginComponent } from 'src/component/login/login.component';
 import { HomeComponent } from 'src/component/home/home.component';
 import { RouteguardService } from 'src/service/routeguard.service';
 import { AppComponent } from './app.component';
+import { Routeguard1Service } from 'src/service/routeguard02.service';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [RouteguardService]
+    canActivate: [RouteguardService],
+    canDeactivate:[Routeguard1Service]
   },
   {
     path: '**',   // 错误路由重定向[写在最后一个]

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as $ from 'jquery';
 import{ DomSanitizer }from'@angular/platform-browser';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -10,12 +11,20 @@ import{ DomSanitizer }from'@angular/platform-browser';
 export class AppComponent implements OnInit,OnDestroy {
 
   constructor(
-      private sanitizer: DomSanitizer
+      private sanitizer: DomSanitizer,
+      private router: Router
   ){}
   childData:number = 1;
   child:number = 2;
   add () {
     this.child ++;
+  }
+
+  login () {
+    this.router.navigate(['login']);
+  }
+  home () {
+    this.router.navigate(['home']);
   }
 
   tableNames:any;

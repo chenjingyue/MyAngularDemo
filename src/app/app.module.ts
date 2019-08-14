@@ -19,6 +19,7 @@ import { DragDirective } from 'src/directive/drag.directive';
 import { LoginComponent } from 'src/component/login/login.component';
 import { HomeComponent } from 'src/component/home/home.component';
 import { RouteguardService } from 'src/service/routeguard.service';
+import { Routeguard1Service } from 'src/service/routeguard02.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { RouteguardService } from 'src/service/routeguard.service';
       animationDuration: 300
     })
   ],
-  providers: [TranslationService,RouteguardService],
+  providers: [TranslationService,RouteguardService,Routeguard1Service],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
